@@ -1,7 +1,38 @@
-# devops
+# devops. HomeWork
 
-__________ Занятие 1 (11.10.2022). Вводное __________
-HW:
+__________ Занятие 2 (13.10.2022). Bash __________
+	1. Написать скрипт, если в файле есть слово "error", тогда удалить этот файл.
+		Bash command:
+			# в тексте файла 'error':
+			find /home/ubuntu/log/ -type f -exac grep error {} \; -delete
+			# в названии файла 'error':
+			find /home/ubuntu/log/ -type f -name \*error\* -delete 
+			find /home/ubuntu/log/ -type f -name \*error\* -exac rm {} \;
+		Script (if/else):
+			#!/bin/bash
+			find /home/ubuntu/log/ -type f -exac grep error {} \; -delete
+
+	2. Написать скрипт, который будет создавать пользователя, имя пользователя должно вводится с клавиатуры. 
+	Если пользователь существует, то вывести сообщение об этом.
+		#!/bin/bash
+		echo "Enter new username: "
+		read name
+		if [ "$name" = `sed 's/:.*//' /etc/passwd | grep -w $name` ]
+		then
+				echo "Such user already exists"
+		else
+				sudo useradd -m $name
+				echo "User $name created successfully"
+		fi
+
+	3. Что такое systemd?
+		systemd - подсистема инициализации и управления службами установленная в большинстве дистрибутивов Linux, позволяет:
+			- запускать систему в разных режимах работы (например terminal/GUI), target - аналог "runlevel" в SysV;
+			- запускать и контролировать службы;
+			- имеет службу журналирования journald;
+			- запускать сервисы по расписанию (аналог crontab).
+
+__________ Занятие 1 (11.10.2022). Linux __________
 	1. Найти топ 7 директорий на сервере, которые больше всего занимают память и записать их в файл:
 		du / | sort -rn | head -n 7 > /home/ubuntu/find.txt
 	2. Создать пользователя и добавить его в группу sudo:
