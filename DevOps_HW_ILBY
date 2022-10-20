@@ -1,5 +1,28 @@
 # devops. HomeWork
 
+__________ Занятие 3 (18.10.2022). Python __________
+	1. Написать Python скрипт, пользователь вводит строку из букв в нижнем регистре и верхнем регистре. 
+	Нужно посчитать, сколько в этой строке больших букв.
+		s = input('Enter string: ')
+		s_up = [char for char in s if char.isupper()]
+		print(len(s_up))
+
+	2. Написать Python скрипт, который будет делать ping google.com. 
+	Если сервер отвечает, то выводить - success, если нет - doesn't work. 
+		import os
+		hostname = "google.com"
+		response = os.system("ping -c 4 " + "google.com")
+		if response == 0:
+			print(hostname, 'success')
+		else:
+			print(hostname, "doesn't work")
+
+	3. Написать Python скрипт, который будет выводить текущую дату и время.
+		import datetime
+		now = datetime.datetime.now()
+		print('Date Time: ', now.strftime("%d-%m-%Y %H:%M"))
+
+
 __________ Занятие 2 (13.10.2022). Bash __________
 	1. Написать скрипт, если в файле есть слово "error", тогда удалить этот файл.
 		Bash command:
@@ -31,6 +54,7 @@ __________ Занятие 2 (13.10.2022). Bash __________
 			- запускать и контролировать службы;
 			- имеет службу журналирования journald;
 			- запускать сервисы по расписанию (аналог crontab).
+
 
 __________ Занятие 1 (11.10.2022). Linux __________
 	1. Найти топ 7 директорий на сервере, которые больше всего занимают память и записать их в файл:
