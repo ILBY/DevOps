@@ -1,5 +1,48 @@
 # devops. HomeWork
 
+__________ Занятие 5 (26.10.2022). Docker Ч1 __________
+	1. Зарегистрироваться в Dockerhub.
+		https://hub.docker.com/r/ilby/siteilby1
+
+	2. Создать свой любой имадж(использовать Dockerfile) и запушить в свой репозиторий в Dockerhub.
+		Ccылка на имадж ilby/siteilby1:
+			https://hub.docker.com/r/ilby/siteilby1
+		Процесс создания имаджа ilby/siteilby1: 
+			mkdir /home/ubuntu/dockerilby
+			vim /home/ubuntu/dockerilby/index.html
+				<!DOCTYPE html>
+				<html>
+					<head>
+						<title>Welcome to site1!</title>
+						<style>
+						html { color-scheme: light dark; }
+						body { width: 35em; margin: 0 auto;
+						font-family: Tahoma, Verdana, Arial, sans-serif; }
+						</style>
+					</head>
+					<body>
+						<h1>Welcome to site1!</h1>
+						<p>If you see this page, docker website successfully working.</p>
+						<p><em>Thank you for spend your time.</em></p>
+					</body>
+				</html>
+			vim /home/ubuntu/dockerilby/Dockerfile
+				FROM nginx:alpine
+				LABEL maintainer="il-by@mail.ru"
+				RUN apk add bash && apk add vim
+				COPY ./index.html /usr/share/nginx/html/index.html
+
+			# Создаем репозиторий с именем siteilby1 на сайте dockerhub
+			# Создаем имадж с именем, который создали на сайте
+			docker build -t ilby/siteilby1 .
+			# Выполняем вход и пушим имадж в удаленный репозиторий 
+			docker login
+			docker push ilby/siteilby1
+
+	3. Изучить разницу между CMD и Entrypoint.
+		
+
+
 __________ Занятие 4 (20.10.2022). Git __________
 	1. С помощью .gitignore, сделать так, чтобы все файлы *.txt не попадали в репозиторий.
 		vim .gitignore
