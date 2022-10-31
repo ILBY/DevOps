@@ -1,6 +1,39 @@
 # devops. HomeWork
 
-__________ Занятие 5 (26.10.2022). Docker Ч1 __________
+__________ Занятие 6 (27.10.2022). Docker Ч2 __________
+	1. Через volume подкинуть конфиг в nginx контейнер, чтобы на страничке в браузере появилась надпись Docker (либо через curl это проверить). Использовать Dockerfile.
+		mkdir /home/ubuntu/dockerilby1
+		mkdir /home/ubuntu/dockerilby1/date
+		vim /home/ubuntu/dockerilby1/date/index.html
+			<!DOCTYPE html><html><head><title>Docker</title></head><body><h1>Docker</h1></body></html>
+		vim /home/ubuntu/dockerilby1/Dockerfile
+			FROM nginx:alpine
+			WORKDIR /home/ubuntu/dockerilby1
+			VOLUME ./date
+		docker build -t site2 .
+		docker run -d -p 127.0.0.1:3003:80 -v /home/ubuntu/dockerilby1/date:/usr/share/nginx/html site2
+		curl 127.0.0.1:3003
+
+	2. То же самое сделать через docker-compose.
+		mkdir /home/ubuntu/dockerilby1
+		mkdir /home/ubuntu/dockerilby1/date
+		vim /home/ubuntu/dockerilby1/date/index.html
+			<!DOCTYPE html><html><head><title>Docker</title></head><body><h1>Docker</h1></body></html>
+		vim /home/ubuntu/dockerilby1/docker-compose.yml
+			version: '3'
+			services:
+			nginx:
+				image: nginx:alpine
+				container_name: site2
+				volumes:
+				- ./date:/usr/share/nginx/html
+				ports:
+				- 3003:80
+		docker-compose up -d
+		curl 127.0.0.1:3003
+
+
+__________ Занятие 5 (25.10.2022). Docker Ч1 __________
 	1. Зарегистрироваться в Dockerhub.
 		https://hub.docker.com/r/ilby/siteilby1
 
@@ -40,7 +73,15 @@ __________ Занятие 5 (26.10.2022). Docker Ч1 __________
 			docker push ilby/siteilby1
 
 	3. Изучить разницу между CMD и Entrypoint.
-		
+		Docker имеет дефолтную ENTRYPOINT, которая является "/bin/sh -c".
+		В ENTRYPOINT указана КОМАНДА!!, которая всегда будет выполняться при запуске контейнера. 
+		В CMD указаны АРГУМЕНТЫ!!, которые будут подаваться в ENTRYPOINT.
+			Например, если Dockerfile:
+				FROM debian:wheezy
+				ENTRYPOINT ["/bin/ping"]
+				CMD ["localhost"]
+			docker run -it test # будет пинговатся localhost
+			docker run -it test google.com # будет пинговатся google.com
 
 
 __________ Занятие 4 (20.10.2022). Git __________
